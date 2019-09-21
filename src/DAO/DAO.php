@@ -1,6 +1,10 @@
 <?php
+namespace App\src\DAO;
 
-abstract class Database
+use PDO;
+use Exception;
+
+abstract class DAO
 {
     //Nos constantes
     const DB_HOST = 'mysql:host=localhost;dbname=blog;charset=utf8';

@@ -2,8 +2,18 @@
 
 namespace App\src\constraint;
 
+/**
+ * Class Validation
+ * @package App\src\constraint
+ */
 class Validation
 {
+    /**
+     * Validate sent data for article, comment or user submission
+     * @param $data
+     * @param $name
+     * @return array
+     */
     public function validate($data, $name)
     {
         if($name === 'Article') {

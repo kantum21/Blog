@@ -9,18 +9,52 @@ use App\src\DAO\CommentDAO;
 use App\src\DAO\UserDAO;
 use App\src\model\View;
 
+/**
+ * Class Controller
+ * @package App\src\controller
+ */
 abstract class Controller
 {
+    /**
+     * @var ArticleDAO
+     */
     protected $articleDAO;
+    /**
+     * @var CommentDAO
+     */
     protected $commentDAO;
+    /**
+     * @var UserDAO
+     */
     protected $userDAO;
+    /**
+     * @var View
+     */
     protected $view;
+    /**
+     * @var Request
+     */
     private $request;
+    /**
+     * @var \App\config\Parameter
+     */
     protected $get;
+    /**
+     * @var \App\config\Parameter
+     */
     protected $post;
+    /**
+     * @var \App\config\Session
+     */
     protected $session;
+    /**
+     * @var Validation
+     */
     protected $validation;
 
+    /**
+     * Controller constructor.
+     */
     public function __construct()
     {
         $this->articleDAO = new ArticleDAO();

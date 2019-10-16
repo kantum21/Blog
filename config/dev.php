@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Constants for database connection in dev environment
+ */
 const HOST = 'localhost';
 const DB_NAME = 'blog';
 const CHARSET = 'utf8';

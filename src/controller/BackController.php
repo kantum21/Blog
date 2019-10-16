@@ -4,8 +4,16 @@ namespace App\src\controller;
 
 use App\config\Parameter;
 
+/**
+ * Class BackController
+ * @package App\src\controller
+ */
 class BackController extends Controller
 {
+    /**
+     * Check if user is logged
+     * @return bool
+     */
     private function checkLoggedIn()
     {
         if(!$this->session->get('pseudo')) {
@@ -16,6 +24,10 @@ class BackController extends Controller
         }
     }
 
+    /**
+     * Check if user is logged as admin
+     * @return bool
+     */
     private function checkAdmin()
     {
         $this->checkLoggedIn();
@@ -27,6 +39,9 @@ class BackController extends Controller
         }
     }
 
+    /**
+     * Load articles, comments, users and display administration page
+     */
     public function administration()
     {
         if($this->checkAdmin()) {
@@ -42,6 +57,10 @@ class BackController extends Controller
         }
     }
 
+    /**
+     * Add an article
+     * @param Parameter $post
+     */
     public function addArticle(Parameter $post)
     {
         if($this->checkAdmin()) {
@@ -61,6 +80,11 @@ class BackController extends Controller
         }
     }
 
+    /**
+     * Update an article
+     * @param Parameter $post
+     * @param $articleId
+     */
     public function editArticle(Parameter $post, $articleId)
     {
         if($this->checkAdmin()) {
@@ -89,6 +113,10 @@ class BackController extends Controller
         }
     }
 
+    /**
+     * Delete an article
+     * @param $articleId
+     */
     public function deleteArticle($articleId)
     {
         if($this->checkAdmin()) {
@@ -98,6 +126,10 @@ class BackController extends Controller
         }
     }
 
+    /**
+     * Delete flag for a signaled comment
+     * @param $commentId
+     */
     public function unflagComment($commentId)
     {
         if($this->checkAdmin()) {
@@ -107,6 +139,10 @@ class BackController extends Controller
         }
     }
 
+    /**
+     * Delete a comment
+     * @param $commentId
+     */
     public function deleteComment($commentId)
     {
         if($this->checkAdmin()) {
@@ -116,6 +152,9 @@ class BackController extends Controller
         }
     }
 
+    /**
+     * Display profile page for logged user
+     */
     public function profile()
     {
         if($this->checkLoggedIn()) {
@@ -123,6 +162,10 @@ class BackController extends Controller
         }
     }
 
+    /**
+     * Update user password
+     * @param Parameter $post
+     */
     public function updatePassword(Parameter $post)
     {
         if($this->checkLoggedIn()) {
@@ -135,6 +178,9 @@ class BackController extends Controller
         }
     }
 
+    /**
+     * Call logoutOrDelete function with logout param
+     */
     public function logout()
     {
         if($this->checkLoggedIn())
@@ -143,6 +189,9 @@ class BackController extends Controller
         }
     }
 
+    /**
+     * Delete user and call logoutOrDelete function with delete_account param
+     */
     public function deleteAccount()
     {
         if($this->checkLoggedIn())
@@ -152,6 +201,10 @@ class BackController extends Controller
         }
     }
 
+    /**
+     * Delete user and redirect to administration page with a message confirming that user has been deleted
+     * @param $userId
+     */
     public function deleteUser($userId)
     {
         if($this->checkAdmin()) {
@@ -161,6 +214,10 @@ class BackController extends Controller
         }
     }
 
+    /**
+     * Redirect to home page with appropriate message
+     * @param $param
+     */
     private function logoutOrDelete($param)
     {
         $this->session->stop();

@@ -3,16 +3,34 @@
 namespace App\src\constraint;
 use App\config\Parameter;
 
+/**
+ * Class ArticleValidation
+ * @package App\src\constraint
+ */
 class ArticleValidation extends Validation
 {
+    /**
+     * @var array
+     */
     private $errors = [];
+    /**
+     * @var Constraint
+     */
     private $constraint;
 
+    /**
+     * ArticleValidation constructor.
+     */
     public function __construct()
     {
         $this->constraint = new Constraint();
     }
 
+    /**
+     * Check data and return errors array
+     * @param Parameter $post
+     * @return array
+     */
     public function check(Parameter $post)
     {
         foreach ($post->all() as $key => $value) {
@@ -21,6 +39,12 @@ class ArticleValidation extends Validation
         return $this->errors;
     }
 
+    /**
+     * According to $name and $value, call a specific function to check if data verify constraints
+     * If not, fill errors array
+     * @param $name string Name of the field
+     * @param $value mixed Value of the field
+     */
     private function checkField($name, $value)
     {
         if($name === 'title') {
@@ -33,6 +57,11 @@ class ArticleValidation extends Validation
         }
     }
 
+    /**
+     * Fill errors array
+     * @param $name
+     * @param $error
+     */
     private function addError($name, $error) {
         if($error) {
             $this->errors += [
@@ -41,6 +70,12 @@ class ArticleValidation extends Validation
         }
     }
 
+    /**
+     * Check title field
+     * @param $name
+     * @param $value
+     * @return string
+     */
     private function checkTitle($name, $value)
     {
         if($this->constraint->notBlank($name, $value)) {
@@ -54,6 +89,12 @@ class ArticleValidation extends Validation
         }
     }
 
+    /**
+     * Check Content field
+     * @param $name
+     * @param $value
+     * @return string
+     */
     private function checkContent($name, $value)
     {
         if($this->constraint->notBlank($name, $value)) {

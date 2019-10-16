@@ -5,8 +5,17 @@ namespace App\src\DAO;
 use App\config\Parameter;
 use App\src\model\Article;
 
+/**
+ * Class ArticleDAO
+ * @package App\src\DAO
+ */
 class ArticleDAO extends DAO
 {
+    /**
+     * Create an article with database data
+     * @param $row
+     * @return Article
+     */
     private function buildObject($row)
     {
         $article = new Article();
@@ -18,6 +27,10 @@ class ArticleDAO extends DAO
         return $article;
     }
 
+    /**
+     * Give articles
+     * @return array
+     */
     public function getArticles()
     {
         $sql = 'SELECT article.id, article.title, article.content, user.pseudo, article.createdAt FROM article INNER JOIN user ON article.user_id = user.id ORDER BY article.id DESC';
@@ -31,6 +44,11 @@ class ArticleDAO extends DAO
         return $articles;
     }
 
+    /**
+     * Give an article
+     * @param $articleId
+     * @return Article
+     */
     public function getArticle($articleId)
     {
         $sql = 'SELECT article.id, article.title, article.content, user.pseudo, article.createdAt FROM article INNER JOIN user ON article.user_id = user.id WHERE article.id = ?';
@@ -40,12 +58,23 @@ class ArticleDAO extends DAO
         return $this->buildObject($article);
     }
 
+    /**
+     * Add an artcile in database
+     * @param Parameter $post
+     * @param $userId
+     */
     public function addArticle(Parameter $post, $userId)
     {
         $sql = 'INSERT INTO article (title, content, createdAt, user_id) VALUES (?, ?, NOW(), ?)';
         $this->createQuery($sql, [$post->get('title'), $post->get('content'), $userId]);
     }
 
+    /**
+     * Update an article in database
+     * @param Parameter $post
+     * @param $articleId
+     * @param $userId
+     */
     public function editArticle(Parameter $post, $articleId, $userId)
     {
         $sql = 'UPDATE article SET title=:title, content=:content, user_id=:user_id WHERE id=:articleId';
@@ -57,6 +86,10 @@ class ArticleDAO extends DAO
         ]);
     }
 
+    /**
+     * Delete an article in database
+     * @param $articleId
+     */
     public function deleteArticle($articleId)
     {
         $sql = 'DELETE FROM comment WHERE article_id = ?';

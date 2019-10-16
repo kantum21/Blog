@@ -4,8 +4,15 @@ namespace App\src\controller;
 
 use App\config\Parameter;
 
+/**
+ * Class FrontController
+ * @package App\src\controller
+ */
 class FrontController extends Controller
 {
+    /**
+     * Load articles and display home page
+     */
     public function home()
     {
         $articles = $this->articleDAO->getArticles();
@@ -14,6 +21,10 @@ class FrontController extends Controller
         ]);
     }
 
+    /**
+     * Load an article with associated comments to display
+     * @param $articleId
+     */
     public function article($articleId)
     {
         $article = $this->articleDAO->getArticle($articleId);
@@ -24,6 +35,11 @@ class FrontController extends Controller
         ]);
     }
 
+    /**
+     * Add comment
+     * @param Parameter $post
+     * @param $articleId
+     */
     public function addComment(Parameter $post, $articleId)
     {
         if($post->get('submit')) {
@@ -44,6 +60,10 @@ class FrontController extends Controller
         }
     }
 
+    /**
+     * Flag a comment
+     * @param $commentId
+     */
     public function flagComment($commentId)
     {
         $this->commentDAO->flagComment($commentId);
@@ -51,6 +71,10 @@ class FrontController extends Controller
         header('Location: ../public/index.php');
     }
 
+    /**
+     * Register new user
+     * @param Parameter $post
+     */
     public function register(Parameter $post)
     {
         if($post->get('submit')) {
@@ -72,6 +96,10 @@ class FrontController extends Controller
         return $this->view->render('register');
     }
 
+    /**
+     * Login
+     * @param Parameter $post
+     */
     public function login(Parameter $post)
     {
         if($post->get('submit')) {

@@ -2,12 +2,28 @@
 
 namespace App\config;
 
+/**
+ * Class Request
+ * @package App\config
+ */
 class Request
 {
+    /**
+     * @var Parameter
+     */
     private $get;
+    /**
+     * @var Parameter
+     */
     private $post;
+    /**
+     * @var Session
+     */
     private $session;
 
+    /**
+     * Request constructor.
+     */
     public function __construct()
     {
         $this->get = new Parameter($_GET);

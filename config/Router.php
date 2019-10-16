@@ -6,6 +6,10 @@ use App\src\controller\ErrorController;
 use App\src\controller\FrontController;
 use Exception;
 
+/**
+ * Class Router
+ * @package App\config
+ */
 class Router
 {
     private $frontController;
@@ -13,6 +17,9 @@ class Router
     private $errorController;
     private $request;
 
+    /**
+     * Router constructor.
+     */
     public function __construct()
     {
         $this->request = new Request();
@@ -21,6 +28,9 @@ class Router
         $this->errorController = new ErrorController();
     }
 
+    /**
+     * Execute a controller method according to route value contained in Request GET Parameter
+     */
     public function run()
     {
         $route = $this->request->getGet()->get('route');

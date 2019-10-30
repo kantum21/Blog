@@ -22,7 +22,8 @@ abstract class DAO
      */
     private function checkConnection()
     {
-        if($this->connection === null) {
+        if($this->connection === null)
+        {
             return $this->getConnection();
         }
         return $this->connection;

@@ -1,0 +1,13 @@
+<form method="post" action="../public/index.php?route=addComment&articleId={{ article.getId }}">
+    <label for="pseudo">Pseudo</label><br>
+    <input type="text" id="pseudo" name="pseudo" value="{{ post.get('pseudo') }}"><br>
+    {% if errors.pseudo %}
+        <p>{{ errors.pseudo }}</p>
+    {% endif %}
+    <label for="content">Message</label><br>
+    <textarea id="content" name="content">{{ post.get('content') }}</textarea><br>
+    {% if errors.comment %}
+        <p>{{ errors.comment }}</p>
+    {% endif %}
+    <input type="submit" value="Ajouter" id="submit" name="submit">
+</form>

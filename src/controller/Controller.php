@@ -2,12 +2,15 @@
 
 namespace App\src\controller;
 
+use App\config\Parameter;
 use App\config\Request;
+use App\config\Session;
 use App\src\constraint\Validation;
 use App\src\DAO\ArticleDAO;
 use App\src\DAO\CommentDAO;
 use App\src\DAO\UserDAO;
-use App\src\model\View;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * Class Controller
@@ -28,23 +31,27 @@ abstract class Controller
      */
     protected $userDAO;
     /**
-     * @var View
+     * @var FilesystemLoader
      */
-    protected $view;
+    protected $loader;
+    /**
+     * @var Environment
+     */
+    protected $twig;
     /**
      * @var Request
      */
     private $request;
     /**
-     * @var \App\config\Parameter
+     * @var Parameter
      */
     protected $get;
     /**
-     * @var \App\config\Parameter
+     * @var Parameter
      */
     protected $post;
     /**
-     * @var \App\config\Session
+     * @var Session
      */
     protected $session;
     /**
@@ -60,11 +67,19 @@ abstract class Controller
         $this->articleDAO = new ArticleDAO();
         $this->commentDAO = new CommentDAO();
         $this->userDAO = new UserDAO();
-        $this->view = new View();
         $this->validation = new Validation();
         $this->request = new Request();
         $this->get = $this->request->getGet();
         $this->post = $this->request->getPost();
         $this->session = $this->request->getSession();
+        $this->loader = new FilesystemLoader('../templates');
+        $this->twig = new Environment($this->loader, [
+            //TODO : desactivate in production
+            'debug' => true,
+            //TODO : activate in production 'cache' => '/path/to/compilation_cache',
+        ]);
+        //TODO : desactivate in production
+        $this->twig->addExtension(new \Twig\Extension\DebugExtension());
+        $this->twig->addGlobal('app', $this->request);
     }
 }

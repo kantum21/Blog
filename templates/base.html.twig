@@ -2,11 +2,11 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8" />
-    <title><?= $title ?></title>
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
 <div id="content">
-    <?= $content ?>
+    {% block content %}{% endblock %}
 </div>
 </body>
 </html>

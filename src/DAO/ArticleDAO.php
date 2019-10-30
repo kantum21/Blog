@@ -36,7 +36,8 @@ class ArticleDAO extends DAO
         $sql = 'SELECT article.id, article.title, article.content, user.pseudo, article.createdAt FROM article INNER JOIN user ON article.user_id = user.id ORDER BY article.id DESC';
         $result = $this->createQuery($sql);
         $articles = [];
-        foreach ($result as $row){
+        foreach ($result as $row)
+        {
             $articleId = $row['id'];
             $articles[$articleId] = $this->buildObject($row);
         }

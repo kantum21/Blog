@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+{% block title %}Accueil{% endblock %}
+{% block content %}
+    <h1>Mon blog</h1>
+    <p>En construction</p>
+        {% include 'messages.html.twig' %}
+    {% if app.session.get('pseudo') %}
+        <a href="../public/index.php?route=logout">Déconnexion</a>
+        <a href="../public/index.php?route=profile">Profil</a>
+        {% if app.session.get('role') == 'admin'  %}
+            <a href="../public/index.php?route=administration">Administration</a>
+        {% endif %}
+    {% else %}
+        <a href="../public/index.php?route=register">Inscription</a>
+        <a href="../public/index.php?route=login">Connexion</a>
+    {% endif %}
+    {% for article in articles %}
+        <div>
+            <h2><a href="../public/index.php?route=article&articleId={{ article.getId }}">{{ article.getTitle }}</a></h2>
+            <p>{{ article.getContent }}</p>
+            <p><{{ article.getAuthor }}</p>
+            <p>Créé le : {{ article.getCreatedAt }}</p>
+        </div>
+        <br/>
+    {% endfor %}
+{% endblock %}

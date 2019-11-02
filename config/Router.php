@@ -37,7 +37,11 @@ class Router
         try{
             if(isset($route))
             {
-                if($route === 'article')
+                if($route === 'homeBlog')
+                {
+                    $this->frontController->homeBlog();
+                }
+                elseif($route === 'article')
                 {
                     $this->frontController->article($this->request->getGet()->get('articleId'));
                 }

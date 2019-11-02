@@ -1,0 +1,43 @@
+#homePage
+{
+    text-align: center;
+    margin-bottom: 0;
+}
+#homePage button
+{
+    margin-top: 25px;
+}
+#socialLinks
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+.facebook
+{
+    height: 54px;
+    width: 54px;
+}
+.twitter
+{
+    height: 54px;
+    width: 54px;
+}
+.linkedin
+{
+    height: 54px;
+    width: 54px;
+}
+footer
+{
+    height: 120px;
+    line-height: 120px;
+    text-align: center;
+    background-color: #2C3E50;
+    color: white;
+}
+footer p
+{
+    margin-bottom: 0;
+}

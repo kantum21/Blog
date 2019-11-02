@@ -1,26 +1,28 @@
 {% extends "base.html.twig" %}
-{% block title %}Accueil{% endblock %}
+{% block title %}Quentin Sporn - Blog{% endblock %}
 {% block content %}
-    <h1>Mon blog</h1>
-    <p>En construction</p>
-        {% include 'messages.html.twig' %}
-    {% if app.session.get('pseudo') %}
-        <a href="../public/index.php?route=logout">Déconnexion</a>
-        <a href="../public/index.php?route=profile">Profil</a>
-        {% if app.session.get('role') == 'admin'  %}
-            <a href="../public/index.php?route=administration">Administration</a>
-        {% endif %}
-    {% else %}
-        <a href="../public/index.php?route=register">Inscription</a>
-        <a href="../public/index.php?route=login">Connexion</a>
-    {% endif %}
-    {% for article in articles %}
-        <div>
-            <h2><a href="../public/index.php?route=article&articleId={{ article.getId }}">{{ article.getTitle }}</a></h2>
-            <p>{{ article.getContent }}</p>
-            <p><{{ article.getAuthor }}</p>
-            <p>Créé le : {{ article.getCreatedAt }}</p>
+    <div id="homePage" class="jumbotron">
+        <p><img src="../public/img/quentin.png" alt="quentin" /></p>
+        <h1 class="display-3">Quentin Sporn - Blog</h1>
+        <p class="lead">Le blog d'un développeur web</p>
+        <hr class="my-4">
+        <p>
+            Bonjour à tous !<br/>
+            J'ai créé cet espace afin de partager avec vous mon profil mais surtout des articles sur le développement web.<br/>
+            Enjoy !<br/>
+        </p>
+        <a href="../public/pdf/cv_2019.pdf"><button type="button" class="btn btn-success">Téléchargez mon CV</button></a>
+        <hr/>
+        <div id="socialLinks">
+            <p>
+                <a href="https://www.facebook.com/kantum21"><img src="../public/img/fb.png" alt="facebook" class="facebook"/></a>
+            </p>
+            <p>
+                <a href="https://twitter.com/kantum21"><img src="../public/img/tw.png" alt="twitter" class="twitter"/></a>
+            </p>
+            <p>
+                <a href="https://www.linkedin.com/in/quentin-sporn-0343555a"><img src="../public/img/li.png" alt="linkedin" class="linkedin"/></a>
+            </p>
         </div>
-        <br/>
-    {% endfor %}
+    </div>
 {% endblock %}

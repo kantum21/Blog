@@ -29,6 +29,29 @@
     height: 54px;
     width: 54px;
 }
+#contactSection
+{
+    text-align: center;
+    width: 55%;
+    margin: auto;
+}
+#contactSection h2
+{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+#contactSection fieldset
+{
+    margin-bottom: 25px;
+}
+#contactSection textarea
+{
+    height: 225px;
+}
+#contactSection button
+{
+    margin-bottom: 25px;
+}
 footer
 {
     height: 120px;

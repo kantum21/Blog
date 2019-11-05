@@ -41,6 +41,14 @@ class Router
                 {
                     $this->frontController->homeBlog();
                 }
+                elseif($route === 'contact')
+                {
+                    $this->frontController->contact();
+                }
+                elseif ($route === 'submitMessage')
+                {
+                    $this->frontController->submitMessage($this->request->getPost());
+                }
                 elseif($route === 'article')
                 {
                     $this->frontController->article($this->request->getGet()->get('articleId'));

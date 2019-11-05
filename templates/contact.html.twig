@@ -1,0 +1,50 @@
+{% extends "base.html.twig" %}
+{% block title %}Contact{% endblock %}
+{% block content %}
+    <section id="contactSection">
+        <h2>Contact</h2>
+        {% if app.session.get('send_message') %}
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {% include 'messages.html.twig' %}
+        </div>
+        {% endif %}
+        <form method="post" action="index.php?route=submitMessage">
+            <fieldset>
+                <legend>Vos coordonnées</legend>
+                <div class="form-group">
+                    <label for="lastName">Nom *</label>
+                    <input type="input" class="form-control" id="lastName" name="lastName" placeholder="Dupont">
+                    {% if errors.lastName %}
+                        <p class="text-danger">{{ errors.lastName }}</p>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="firstName">Prénom *</label>
+                    <input type="input" class="form-control" id="firstName" name="firstName" placeholder="Jean">
+                    {% if errors.firstName %}
+                        <p class="text-danger">{{ errors.firstName }}</p>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="mail">Email *</label>
+                    <input type="text" class="form-control" id="mail" name="mail" placeholder="jean.dupont@free.fr">
+                    {% if errors.mail %}
+                        <p class="text-danger">{{ errors.mail }}</p>
+                    {% endif %}
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Votre Message</legend>
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea class="form-control" id="message" name="message" rows="10"></textarea>
+                    {% if errors.message %}
+                        <p class="text-danger">{{ errors.message }}</p>
+                    {% endif %}
+                </div>
+            </fieldset>
+            <button type="submit" name="submit" value="Envoyer" class="btn btn-success">Envoyer</button>
+        </form>
+    </section>
+{% endblock %}

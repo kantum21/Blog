@@ -36,6 +36,57 @@ class FrontController extends Controller
     }
 
     /**
+     * Display contact form page
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function contact()
+    {
+        echo $this->twig->render('contact.html.twig');
+    }
+
+    /**
+     * Submit message with contact form
+     * @param Parameter $post
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function submitMessage(Parameter $post)
+    {
+        if($post->get('submit'))
+        {
+            $errors = $this->validation->validate($post, 'Contact');
+            if($errors)
+            {
+                echo $this->twig->render('contact.html.twig', [
+                    'errors' => $errors
+                ]);
+            }
+            else
+            {
+                $this->contact->setLastName($post->get('lastName'));
+                $this->contact->setFirstName($post->get('firstName'));
+                $this->contact->setMail($post->get('mail'));
+                $this->contact->setMessage($post->get('message'));
+                $to = 'quentinsporn@gmail.com';
+                $subject = 'Quentin Sporn Blog - Contact';
+                $message = $this->twig->render('contact_message.html.twig', [
+                        'data' => $this->contact
+                    ]);
+                $headers[] = 'MIME-Version: 1.0';
+                $headers[] = 'Content-type: text/html; charset=utf-8';
+                if(mail($to, $subject, $message, implode("\r\n", $headers)))
+                {
+                    $this->session->set('send_message', 'Le message a bien été envoyé');
+                    header('Location: ../public/index.php?route=contact');
+                }
+            }
+        }
+    }
+
+    /**
      * Load an article with associated comments to display
      * @param $articleId
      * @throws LoaderError

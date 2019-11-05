@@ -18,7 +18,7 @@ class Constraint
     {
         if(empty($value))
         {
-            return 'Le champ ' . $name . ' saisi est vide';
+            return 'Ce champ est obligatoire';
         }
     }
 
@@ -33,7 +33,7 @@ class Constraint
     {
         if(strlen($value) < $minSize)
         {
-            return 'Le champ ' . $name . ' doit contenir au moins ' . $minSize . ' caractères';
+            return 'Ce champ doit contenir au moins ' . $minSize . ' caractères';
         }
     }
 
@@ -48,7 +48,21 @@ class Constraint
     {
         if(strlen($value) > $maxSize)
         {
-            return 'Le champ ' . $name . ' doit contenir au maximum ' . $maxSize . ' caractères';
+            return 'Ce champ doit contenir au maximum ' . $maxSize . ' caractères';
+        }
+    }
+
+    /**
+     * Verify is email
+     * @param $name
+     * @param $value
+     * @return string
+     */
+    public function isEmail($name, $value)
+    {
+        if (!preg_match( " /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/ " , $value ) )
+        {
+            return 'Cet email n\'est pas valide';
         }
     }
 }

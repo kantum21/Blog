@@ -1,10 +1,27 @@
 {% extends "base.html.twig" %}
-{% block title %}Nouvel article{% endblock %}
+{% block title %}Blog | Nouvel article{% endblock %}
 {% block content %}
-    <h1>Mon blog</h1>
-    <p>En construction</p>
-    <div>
-        {% include 'form_article.html.twig' %}
-        <a href="../public/index.php?route=homeBlog">Retour à l'accueil</a>
-    </div>
+    <section id="addArticleSection">
+        <h1>Nouvel article</h1>
+        <form method="post" action="../public/index.php?route=addArticle">
+            <div class="form-group">
+                <label for="title">Titre *</label>
+                <input type="text" class="form-control" id="title" name="title" />
+            </div>
+            {% if errors.title %}
+                <p class="text-danger">{{ errors.title }}</p>
+            {% endif %}
+            <div class="form-group">
+                <label for="content">Contenu *</label>
+                <textarea id="content" class="form-control" name="content">{{ post.get('content') }}</textarea>
+            </div>
+            {% if errors.content %}
+                <p class="text-danger">{{ errors.content }}</p>
+            {% endif %}
+            <p>Les champs marqués d'une * sont obligatoires</p>
+            <input type="submit" value="Ajouter" id="submit" name="submit" class="btn btn-success">
+        </form>
+        <br/>
+        <p><a href="../public/index.php?route=homeBlog" class="btn btn-secondary">Retour à l'accueil</a></p>
+    </section>
 {% endblock %}

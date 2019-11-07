@@ -1,26 +1,29 @@
 {% extends "base.html.twig" %}
 {% block title %}Blog{% endblock %}
 {% block content %}
-    <h1>Mon blog</h1>
-    <p>En construction</p>
+    <section id="blogSection">
+        <h1>Blog</h1>
         {% include 'messages.html.twig' %}
-    {% if app.session.get('pseudo') %}
-        <a href="../public/index.php?route=logout">Déconnexion</a>
-        <a href="../public/index.php?route=profile">Profil</a>
-        {% if app.session.get('role') == 'admin'  %}
-            <a href="../public/index.php?route=administration">Administration</a>
-        {% endif %}
-    {% else %}
-        <a href="../public/index.php?route=register">Inscription</a>
-        <a href="../public/index.php?route=login">Connexion</a>
-    {% endif %}
-    {% for article in articles %}
-        <div>
-            <h2><a href="../public/index.php?route=article&articleId={{ article.getId }}">{{ article.getTitle }}</a></h2>
-            <p>{{ article.getContent }}</p>
-            <p><{{ article.getAuthor }}</p>
-            <p>Créé le : {{ article.getCreatedAt }}</p>
+        <div class="button-links">
+            {% if app.session.get('pseudo') %}
+                <a href="../public/index.php?route=profile"><button type="button" class="btn btn-success">Profil</button></a>
+                {% if app.session.get('role') == 'admin'  %}
+                    <a href="../public/index.php?route=administration"><button type="button" class="btn btn-success">Administration</button></a>
+                {% endif %}
+                <a href="../public/index.php?route=logout"><button type="button" class="btn btn-danger">Déconnexion</button></a>
+            {% else %}
+                <a href="../public/index.php?route=register"><button type="button" class="btn btn-success">Inscription</button></a>
+                <a href="../public/index.php?route=login"><button type="button" class="btn btn-success">Connexion</button></a>
+            {% endif %}
         </div>
-        <br/>
-    {% endfor %}
+        {% for article in articles %}
+            <div class="card text-white bg-secondary">
+                <div class="card-header"><h2><a href="../public/index.php?route=article&articleId={{ article.getId }}">{{ article.getTitle }}</a></h2></div>
+                <p>{{ article.getContent|slice(0, 200) }}...</p>
+                <p>Auteur : {{ article.getAuthor }}</p>
+                <p>Créé le : {{ article.getCreatedAt|date('d/m/Y à H:i:s') }}</p>
+            </div>
+            <br/>
+        {% endfor %}
+    </section>
 {% endblock %}

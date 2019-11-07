@@ -70,7 +70,7 @@ class FrontController extends Controller
                 $this->contact->setFirstName($post->get('firstName'));
                 $this->contact->setMail($post->get('mail'));
                 $this->contact->setMessage($post->get('message'));
-                $to = 'quentinsporn@gmail.com';
+                $to = EMAIL;
                 $subject = 'Quentin Sporn Blog - Contact';
                 $message = $this->twig->render('contact_message.html.twig', [
                         'data' => $this->contact
@@ -200,7 +200,7 @@ class FrontController extends Controller
             }
             else
             {
-                $this->session->set('error_login', 'Le pseudo ou le mot de passe sont incorrects');
+                $this->session->set('error_login', 'Les identifiants de connexion saisis sont incorrects');
                 echo $this->twig->render('login.html.twig', [
                     'post'=> $post
                 ]);

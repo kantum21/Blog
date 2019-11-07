@@ -2,13 +2,8 @@
 {% block title %}Contact{% endblock %}
 {% block content %}
     <section id="contactSection">
-        <h2>Contact</h2>
-        {% if app.session.get('send_message') %}
-        <div class="alert alert-dismissible alert-success">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            {% include 'messages.html.twig' %}
-        </div>
-        {% endif %}
+        <h1>Contact</h1>
+        {% include 'messages.html.twig' %}
         <form method="post" action="index.php?route=submitMessage">
             <fieldset>
                 <legend>Vos coordonnées</legend>
@@ -44,6 +39,7 @@
                     {% endif %}
                 </div>
             </fieldset>
+            <p>Les champs marqués d'une * sont obligatoires</p>
             <button type="submit" name="submit" value="Envoyer" class="btn btn-success">Envoyer</button>
         </form>
     </section>

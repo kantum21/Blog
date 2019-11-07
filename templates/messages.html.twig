@@ -1,15 +1,90 @@
-{{ app.session.show('add_article') }}
-{{ app.session.show('edit_article') }}
-{{ app.session.show('delete_article') }}
-{{ app.session.show('add_comment') }}
-{{ app.session.show('flag_comment') }}
-{{ app.session.show('unflag_comment') }}
-{{ app.session.show('delete_comment') }}
-{{ app.session.show('delete_user') }}
-{{ app.session.show('update_password') }}
-{{ app.session.show('register') }}
-{{ app.session.show('login') }}
-{{ app.session.show('error_login') }}
-{{ app.session.show('logout') }}
-{{ app.session.show('delete_account') }}
-{{ app.session.show('send_message') }}
+{% if app.session.get('add_article') %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ app.session.show('add_article') }}
+    </div>
+{% endif %}
+{% if app.session.get('edit_article') %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ app.session.show('edit_article') }}
+    </div>
+{% endif %}
+{% if app.session.get('delete_article') %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ app.session.show('delete_article') }}
+    </div>
+{% endif %}
+{% if app.session.get('add_comment') %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ app.session.show('add_comment') }}
+    </div>
+{% endif %}
+{% if app.session.get('flag_comment') %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ app.session.show('flag_comment') }}
+    </div>
+{% endif %}
+{% if app.session.get('unflag_comment') %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ app.session.show('unflag_comment') }}
+    </div>
+{% endif %}
+{% if app.session.get('delete_comment') %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ app.session.show('delete_comment') }}
+    </div>
+{% endif %}
+{% if app.session.get('delete_user') %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ app.session.show('delete_user') }}
+    </div>
+{% endif %}
+{% if app.session.get('update_password') %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ app.session.show('update_password') }}
+    </div>
+{% endif %}
+{% if app.session.get('register') %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ app.session.show('register') }}
+    </div>
+{% endif %}
+{% if app.session.get('login') %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ app.session.show('login') }}
+    </div>
+{% endif %}
+{% if app.session.get('error_login') %}
+    <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ app.session.show('error_login') }}
+    </div>
+{% endif %}
+{% if app.session.get('logout') %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ app.session.show('logout') }}
+    </div>
+{% endif %}
+{% if app.session.get('delete_account') %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ app.session.show('delete_account') }}
+    </div>
+{% endif %}
+{% if app.session.get('send_message') %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ app.session.show('send_message') }}
+    </div>
+{% endif %}

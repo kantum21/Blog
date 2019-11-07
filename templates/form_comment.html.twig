@@ -1,13 +1,18 @@
 <form method="post" action="../public/index.php?route=addComment&articleId={{ article.getId }}">
-    <label for="pseudo">Pseudo</label><br>
-    <input type="text" id="pseudo" name="pseudo" value="{{ post.get('pseudo') }}"><br>
+    <div class="form-group">
+        <label for="pseudo">Pseudo *</label><br>
+        <input type="text" class="form-control" id="pseudo" name="pseudo" />
+    </div>
     {% if errors.pseudo %}
         <p>{{ errors.pseudo }}</p>
     {% endif %}
-    <label for="content">Message</label><br>
-    <textarea id="content" name="content">{{ post.get('content') }}</textarea><br>
+    <div class="form-group">
+        <label for="content">Message *</label><br>
+        <textarea id="content" name="content" class="form-control"></textarea>
+     </div>
     {% if errors.comment %}
         <p>{{ errors.comment }}</p>
     {% endif %}
-    <input type="submit" value="Ajouter" id="submit" name="submit">
+    <p>Les champs marqués d'une * sont obligatoires</p>
+    <input type="submit" value="Ajouter" id="submit" name="submit" class="btn btn-success" />
 </form>

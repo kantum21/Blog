@@ -1,10 +1,29 @@
 {% extends "base.html.twig" %}
-{% block title %}Modifier l'article{% endblock %}
+{% block title %}Blog | Modifier l'article{% endblock %}
 {% block content %}
-    <h1>Mon blog</h1>
-    <p>En construction</p>
-    <div>
-        {% include 'form_article.html.twig' %}
-        <a href="../public/index.php?route=homeBlog">Retour à l'accueil</a>
-    </div>
+    <section id="editArticleSection">
+        <h1>Modifier l'article</h1>
+        <div>
+            <form method="post" action="../public/index.php?route=editArticle&articleId={{ post.get('id') }}">
+                <div class="form-group">
+                    <label for="title">Titre *</label>
+                    <input type="text" class="form-control" id="title" name="title" value="{{ post.get('title') }}">
+                </div>
+                {% if errors.title %}
+                    <p class="text-danger">{{ errors.title }}</p>
+                {% endif %}
+                <div class="form-group">
+                    <label for="content">Contenu *</label>
+                    <textarea class="form-control" id="content" name="content">{{ post.get('content') }}</textarea>
+                </div>
+                {% if errors.content %}
+                    <p class="text-danger">{{ errors.content }}</p>
+                {% endif %}
+                <p>Les champs marqués d'une * sont obligatoires</p>
+                <input type="submit" value="Modifier" id="submit" name="submit" class="btn btn-success">
+            </form>
+            <br/>
+        </div>
+        <p><a href="../public/index.php?route=homeBlog" class="btn btn-secondary">Retour à l'accueil</a></p>
+    </section>
 {% endblock %}

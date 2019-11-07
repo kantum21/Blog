@@ -1,22 +1,31 @@
 {% extends "base.html.twig" %}
-{% block title %}Inscription{% endblock %}
+{% block title %}Blog | Inscription{% endblock %}
 {% block content %}
-    <h1>Mon blog</h1>
-    <p>En construction</p>
-    <div>
-        <form method="post" action="../public/index.php?route=register">
-            <label for="pseudo">Pseudo</label><br>
-            <input type="text" id="pseudo" name="pseudo" value="{{ post.get('pseudo') }}"><br/>
-            {% if errors.pseudo %}
-                <p>{{ errors.pseudo }}</p>
-            {% endif %}
-            <label for="password">Mot de passe</label><br>
-            <input type="password" id="password" name="password"><br/>
-            {% if errors.password %}
-                <p>{{ errors.password }}</p>
-            {% endif %}
-            <input type="submit" value="Inscription" id="submit" name="submit">
-        </form>
-        <a href="../public/index.php?route=homeBlog">Retour à l'accueil</a>
-    </div>
+    <section id="registerSection">
+        <h1>Inscription</h1>
+        <div>
+            <form method="post" action="../public/index.php?route=register">
+                <div class="form-group">
+                    <label for="pseudo">Pseudo *</label>
+                    <input type="text" class="form-control" id="pseudo" name="pseudo">
+                </div>
+                {% if errors.pseudo %}
+                    <p class="text-danger">{{ errors.pseudo }}</p>
+                {% endif %}
+                <div class="form-group">
+                    <label for="password">Mot de passe *</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                {% if errors.password %}
+                    <p class="text-danger">{{ errors.password }}</p>
+                {% endif %}
+                <p>Les champs marqués d'une * sont obligatoires</p>
+                <input type="submit" value="Inscription" id="submit" name="submit" class="btn btn-success" />
+            </form>
+            <br/>
+            <p>
+                <a href="../public/index.php?route=homeBlog"><button class="btn btn-secondary">Retour à l'accueil</button></a>
+            </p>
+        </div>
+    </section>
 {% endblock %}

@@ -4,30 +4,29 @@
     <section id="articleSection">
         <div>
             <h1>{{ article.getTitle}}</h1>
+            {% include 'messages.html.twig' %}
+            <p><strong>{{ article.getHead }}</strong></p>
             <p>{{ article.getContent }}</p>
-            <p><em>{{ article.getAuthor }}</em></p>
-            <p>Créé le : {{ article.getCreatedAt }}</p>
-        </div>
-        <div class="actions">
-            <a href="../public/index.php?route=editArticle&articleId={{ article.getId }}">Modifier</a>
-            <a href="../public/index.php?route=deleteArticle&articleId={{ article.getId }}">Supprimer</a>
+            <p><em>Auteur : {{ article.getAuthor }}</em></p>
+            <p>Mis à jours le : {{ article.getUpdatedAt }}</p>
         </div>
         <div id="comments">
             <h2>Ajouter un commentaire</h2>
             {% include'form_comment.html.twig' %}
-            <h2>Commentaires</h2>
-            {% for comment in comments %}
-                <p>{{ comment.getContent }}</p>
-                <p>Posté le {{ comment.getCreatedAt|date('d/m/Y à H:i:s') }}</p>
-                <p><em>{{ comment.getPseudo }}</em></p>
-                {% if comment.isFlag %}
-                    <p>Ce commentaire a déjà été signalé</p>
-                {% else %}
-                    <p><a href="../public/index.php?route=flagComment&commentId={{ comment.getId }}">Signaler le commentaire</a></p>
-                {% endif %}
-                <p><a href="../public/index.php?route=deleteComment&commentId={{ comment.getId }}">Supprimer le commentaire</a></p>
-                <br/>
-            {% endfor %}
+            {% if comments %}
+                <h2>Commentaires</h2>
+                {% for comment in comments %}
+                    <p>{{ comment.getContent }}</p>
+                    <p>Posté le : {{ comment.getCreatedAt|date('d/m/Y à H:i:s') }}</p>
+                    <p><em>Auteur : {{ comment.getPseudo }}</em></p>
+                    {% if comment.isFlag %}
+                        <p>Ce commentaire a déjà été signalé</p>
+                    {% else %}
+                        <p><a href="../public/index.php?route=flagComment&commentId={{ comment.getId }}">Signaler le commentaire</a></p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <br/>
         </div>
         <p><a href="../public/index.php?route=homeBlog" class="btn btn-secondary">Retour à l'accueil</a></p>
     </section>

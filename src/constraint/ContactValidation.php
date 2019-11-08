@@ -50,22 +50,22 @@ class ContactValidation extends Validation
     {
         if($name === 'lastName')
         {
-            $error = $this->checkLastName($name, $value);
+            $error = $this->checkLastName($value);
             $this->addError($name, $error);
         }
         elseif ($name === 'firstName')
         {
-            $error = $this->checkFirstName($name, $value);
+            $error = $this->checkFirstName($value);
             $this->addError($name, $error);
         }
         elseif ($name === 'mail')
         {
-            $error = $this->checkMail($name, $value);
+            $error = $this->checkMail($value);
             $this->addError($name, $error);
         }
         elseif ($name === 'message')
         {
-            $error = $this->checkMessage($name, $value);
+            $error = $this->checkMessage($value);
             $this->addError($name, $error);
         }
     }
@@ -86,78 +86,74 @@ class ContactValidation extends Validation
 
     /**
      * Check lastName field
-     * @param $name
      * @param $value
      * @return string
      */
-    private function checkLastName($name, $value)
+    private function checkLastName($value)
     {
-        if($this->constraint->notBlank($name, $value))
+        if($this->constraint->notBlank($value))
         {
-            return $this->constraint->notBlank('lastName', $value);
+            return $this->constraint->notBlank($value);
         }
-        if($this->constraint->minLength($name, $value, 2))
+        if($this->constraint->minLength($value, 2))
         {
-            return $this->constraint->minLength('lastName', $value, 2);
+            return $this->constraint->minLength($value, 2);
         }
-        if($this->constraint->maxLength($name, $value, 255))
+        if($this->constraint->maxLength($value, 255))
         {
-            return $this->constraint->maxLength('lastName', $value, 255);
+            return $this->constraint->maxLength($value, 255);
         }
     }
 
     /**
      * Check firstName field
-     * @param $name
      * @param $value
      * @return string
      */
-    private function checkFirstName($name, $value)
+    private function checkFirstName($value)
     {
-        if($this->constraint->notBlank($name, $value))
+        if($this->constraint->notBlank($value))
         {
-            return $this->constraint->notBlank('firstName', $value);
+            return $this->constraint->notBlank($value);
         }
-        if($this->constraint->minLength($name, $value, 2))
+        if($this->constraint->minLength($value, 2))
         {
-            return $this->constraint->minLength('firstName', $value, 2);
+            return $this->constraint->minLength($value, 2);
         }
-        if($this->constraint->maxLength($name, $value, 255))
+        if($this->constraint->maxLength($value, 255))
         {
-            return $this->constraint->maxLength('firstName', $value, 255);
+            return $this->constraint->maxLength($value, 255);
         }
     }
 
     /**
      * Check mail field
-     * @param $name
      * @param $value
      * @return string
      */
-    private function checkMail($name, $value)
+    private function checkMail($value)
     {
-        if($this->constraint->notBlank($name, $value))
+        if($this->constraint->notBlank($value))
         {
-            return $this->constraint->notBlank('firstMail', $value);
+            return $this->constraint->notBlank($value);
         }
 
-        if($this->constraint->isEmail($name, $value))
+        if($this->constraint->isEmail($value))
         {
-            return $this->constraint->isEmail('firstMail', $value);
+            return $this->constraint->isEmail($value);
         }
     }
 
     /**
      * Check message field
-     * @param $name
      * @param $value
      * @return string
      */
-    private function checkMessage($name, $value)
+    private function checkMessage($value)
     {
-        if($this->constraint->notBlank($name, $value))
+        if($this->constraint->notBlank($value))
         {
-            return $this->constraint->notBlank('message', $value);
+            return $this->constraint->notBlank($value);
         }
     }
 }

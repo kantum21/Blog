@@ -10,6 +10,7 @@
             <tr>
                 <td>Id</td>
                 <td>Titre</td>
+                <td>Chapeau</td>
                 <td>Contenu</td>
                 <td>Auteur</td>
                 <td>Date</td>
@@ -19,6 +20,7 @@
                 <tr>
                     <td>{{ article.getId }}</td>
                     <td><a href="../public/index.php?route=article&articleId={{ article.getId }}">{{ article.getTitle }}</a></td>
+                    <td>{{ article.getHead|slice(0, 150) }}</td>
                     <td>{{ article.getContent|slice(0, 150) }}</td>
                     <td>{{ article.getAuthor }}</td>
                     <td>Créé le : {{ article.getCreatedAt|date("d/m/Y H:i:s") }}</td>

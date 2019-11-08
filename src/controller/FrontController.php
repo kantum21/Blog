@@ -116,21 +116,32 @@ class FrontController extends Controller
         if($post->get('submit'))
         {
             $errors = $this->validation->validate($post, 'Comment');
+            if (!$this->session->get('pseudo'))
+            {
+                $errors['pseudo'] = 'Vous devez être connecté pour pouvoir poster un commentaire';
+            }
+            else
+            {
+                $post->set('pseudo', $this->session->get('pseudo'));
+            }
             if(!$errors)
             {
                 $this->commentDAO->addComment($post, $articleId);
                 $this->session->set('add_comment', 'Le nouveau commentaire a bien été ajouté');
-                header('Location: ../public/index.php?route=homeBlog');
+                header('Location: ../public/index.php?route=article&articleId=' . $articleId);
             }
-            $article = $this->articleDAO->getArticle($articleId);
-            $comments = $this->commentDAO->getCommentsFromArticle($articleId);
+            else
+            {
+                $article = $this->articleDAO->getArticle($articleId);
+                $comments = $this->commentDAO->getCommentsFromArticle($articleId);
 
-            echo $this->twig->render('single.html.twig', [
-                'article' => $article,
-                'comments' => $comments,
-                'post' => $post,
-                'errors' => $errors
-            ]);
+                echo $this->twig->render('single.html.twig', [
+                    'article' => $article,
+                    'comments' => $comments,
+                    'post' => $post,
+                    'errors' => $errors
+                ]);
+            }
         }
     }
 

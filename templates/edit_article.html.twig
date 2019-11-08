@@ -13,6 +13,13 @@
                     <p class="text-danger">{{ errors.title }}</p>
                 {% endif %}
                 <div class="form-group">
+                    <label for="head">Chapeau *</label>
+                    <input type="text" class="form-control" id="head" name="head" value="{{ post.get('head') }}">
+                </div>
+                {% if errors.head %}
+                    <p class="text-danger">{{ errors.head }}</p>
+                {% endif %}
+                <div class="form-group">
                     <label for="content">Contenu *</label>
                     <textarea class="form-control" id="content" name="content">{{ post.get('content') }}</textarea>
                 </div>

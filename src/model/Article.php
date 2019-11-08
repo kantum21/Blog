@@ -21,6 +21,11 @@ class Article
     /**
      * @var string
      */
+    private $head;
+
+    /**
+     * @var string
+     */
     private $content;
 
     /**
@@ -32,6 +37,11 @@ class Article
      * @var \DateTime
      */
     private $createdAt;
+
+    /**
+     * @var \DateTime
+     */
+    private $updatedAt;
 
     /**
      * @return int
@@ -63,6 +73,22 @@ class Article
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHead()
+    {
+        return $this->head;
+    }
+
+    /**
+     * @param string $head
+     */
+    public function setHead($head)
+    {
+        $this->head = $head;
     }
 
     /**
@@ -111,5 +137,21 @@ class Article
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->createdAt = $updatedAt;
     }
 }

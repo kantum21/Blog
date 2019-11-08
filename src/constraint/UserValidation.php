@@ -50,12 +50,12 @@ class UserValidation extends Validation
     {
         if($name === 'pseudo')
         {
-            $error = $this->checkPseudo($name, $value);
+            $error = $this->checkPseudo($value);
             $this->addError($name, $error);
         }
         elseif ($name === 'password')
         {
-            $error = $this->checkPassword($name, $value);
+            $error = $this->checkPassword($value);
             $this->addError($name, $error);
         }
     }
@@ -76,45 +76,43 @@ class UserValidation extends Validation
 
     /**
      * Check pseudo field
-     * @param $name
      * @param $value
      * @return string
      */
-    private function checkPseudo($name, $value)
+    private function checkPseudo($value)
     {
-        if($this->constraint->notBlank($name, $value))
+        if($this->constraint->notBlank($value))
         {
-            return $this->constraint->notBlank('pseudo', $value);
+            return $this->constraint->notBlank($value);
         }
-        if($this->constraint->minLength($name, $value, 2))
+        if($this->constraint->minLength($value, 2))
         {
-            return $this->constraint->minLength('pseudo', $value, 2);
+            return $this->constraint->minLength($value, 2);
         }
-        if($this->constraint->maxLength($name, $value, 255))
+        if($this->constraint->maxLength($value, 255))
         {
-            return $this->constraint->maxLength('pseudo', $value, 255);
+            return $this->constraint->maxLength($value, 255);
         }
     }
 
     /**
      * Check password field
-     * @param $name
      * @param $value
      * @return string
      */
-    private function checkPassword($name, $value)
+    private function checkPassword($value)
     {
-        if($this->constraint->notBlank($name, $value))
+        if($this->constraint->notBlank($value))
         {
-            return $this->constraint->notBlank('password', $value);
+            return $this->constraint->notBlank($value);
         }
-        if($this->constraint->minLength($name, $value, 2))
+        if($this->constraint->minLength($value, 2))
         {
-            return $this->constraint->minLength('password', $value, 2);
+            return $this->constraint->minLength($value, 2);
         }
-        if($this->constraint->maxLength($name, $value, 255))
+        if($this->constraint->maxLength($value, 255))
         {
-            return $this->constraint->maxLength('password', $value, 255);
+            return $this->constraint->maxLength($value, 255);
         }
     }
 }

@@ -1,17 +1,13 @@
 <form method="post" action="../public/index.php?route=addComment&articleId={{ article.getId }}">
     <div class="form-group">
-        <label for="pseudo">Pseudo *</label><br>
-        <input type="text" class="form-control" id="pseudo" name="pseudo" />
-    </div>
-    {% if errors.pseudo %}
-        <p>{{ errors.pseudo }}</p>
-    {% endif %}
-    <div class="form-group">
         <label for="content">Message *</label><br>
         <textarea id="content" name="content" class="form-control"></textarea>
      </div>
-    {% if errors.comment %}
-        <p>{{ errors.comment }}</p>
+    {% if errors.pseudo %}
+        <p class="text-danger">{{ errors.pseudo }}</p>
+    {% endif %}
+    {% if errors.content %}
+        <p class="text-danger">{{ errors.content }}</p>
     {% endif %}
     <p>Les champs marqués d'une * sont obligatoires</p>
     <input type="submit" value="Ajouter" id="submit" name="submit" class="btn btn-success" />

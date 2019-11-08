@@ -48,14 +48,9 @@ class CommentValidation extends Validation
      */
     private function checkField($name, $value)
     {
-        if($name === 'pseudo')
+        if ($name === 'content')
         {
-            $error = $this->checkPseudo($name, $value);
-            $this->addError($name, $error);
-        }
-        elseif ($name === 'content')
-        {
-            $error = $this->checkContent($name, $value);
+            $error = $this->checkContent($value);
             $this->addError($name, $error);
         }
     }
@@ -76,42 +71,19 @@ class CommentValidation extends Validation
     }
 
     /**
-     * Check Pseudo field
-     * @param $name
-     * @param $value
-     * @return string
-     */
-    private function checkPseudo($name, $value)
-    {
-        if($this->constraint->notBlank($name, $value))
-        {
-            return $this->constraint->notBlank('pseudo', $value);
-        }
-        if($this->constraint->minLength($name, $value, 2))
-        {
-            return $this->constraint->minLength('pseudo', $value, 2);
-        }
-        if($this->constraint->maxLength($name, $value, 255))
-        {
-            return $this->constraint->maxLength('pseudo', $value, 255);
-        }
-    }
-
-    /**
      * Check Content field
-     * @param $name
      * @param $value
      * @return string
      */
-    private function checkContent($name, $value)
+    private function checkContent($value)
     {
-        if($this->constraint->notBlank($name, $value))
+        if($this->constraint->notBlank($value))
         {
-            return $this->constraint->notBlank('contenu', $value);
+            return $this->constraint->notBlank($value);
         }
-        if($this->constraint->minLength($name, $value, 2))
+        if($this->constraint->minLength($value, 2))
         {
-            return $this->constraint->minLength('contenu', $value, 2);
+            return $this->constraint->minLength($value, 2);
         }
     }
 }

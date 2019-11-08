@@ -50,12 +50,17 @@ class ArticleValidation extends Validation
     {
         if($name === 'title')
         {
-            $error = $this->checkTitle($name, $value);
+            $error = $this->checkTitle($value);
+            $this->addError($name, $error);
+        }
+        elseif ($name === 'head')
+        {
+            $error = $this->checkHead($value);
             $this->addError($name, $error);
         }
         elseif ($name === 'content')
         {
-            $error = $this->checkContent($name, $value);
+            $error = $this->checkContent($value);
             $this->addError($name, $error);
         }
     }
@@ -77,41 +82,56 @@ class ArticleValidation extends Validation
 
     /**
      * Check title field
-     * @param $name
      * @param $value
      * @return string
      */
-    private function checkTitle($name, $value)
+    private function checkTitle($value)
     {
-        if($this->constraint->notBlank($name, $value))
+        if($this->constraint->notBlank($value))
         {
-            return $this->constraint->notBlank('titre', $value);
+            return $this->constraint->notBlank($value);
         }
-        if($this->constraint->minLength($name, $value, 2))
+        if($this->constraint->minLength($value, 2))
         {
-            return $this->constraint->minLength('titre', $value, 2);
+            return $this->constraint->minLength($value, 2);
         }
-        if($this->constraint->maxLength($name, $value, 255))
+        if($this->constraint->maxLength($value, 255))
         {
-            return $this->constraint->maxLength('titre', $value, 255);
+            return $this->constraint->maxLength($value, 255);
+        }
+    }
+
+    /**
+     * Check Head field
+     * @param $value
+     * @return string
+     */
+    private function checkHead($value)
+    {
+        if($this->constraint->notBlank($value))
+        {
+            return $this->constraint->notBlank($value);
+        }
+        if($this->constraint->minLength($value, 2))
+        {
+            return $this->constraint->minLength($value, 2);
         }
     }
 
     /**
      * Check Content field
-     * @param $name
      * @param $value
      * @return string
      */
-    private function checkContent($name, $value)
+    private function checkContent($value)
     {
-        if($this->constraint->notBlank($name, $value))
+        if($this->constraint->notBlank($value))
         {
-            return $this->constraint->notBlank('contenu', $value);
+            return $this->constraint->notBlank($value);
         }
-        if($this->constraint->minLength($name, $value, 2))
+        if($this->constraint->minLength($value, 2))
         {
-            return $this->constraint->minLength('contenu', $value, 2);
+            return $this->constraint->minLength($value, 2);
         }
     }
 }

@@ -19,9 +19,8 @@
         {% for article in articles %}
             <div class="card text-white bg-secondary">
                 <div class="card-header"><h2><a href="../public/index.php?route=article&articleId={{ article.getId }}">{{ article.getTitle }}</a></h2></div>
-                <p>{{ article.getContent|slice(0, 200) }}...</p>
-                <p>Auteur : {{ article.getAuthor }}</p>
-                <p>Créé le : {{ article.getCreatedAt|date('d/m/Y à H:i:s') }}</p>
+                <p>{{ article.getHead|slice(0, 200) }}...</p>
+                <p>Mis à jours le : {{ article.getUpdatedAt|date('d/m/Y à H:i:s') }}</p>
             </div>
             <br/>
         {% endfor %}

@@ -10,11 +10,10 @@ class Constraint
 {
     /**
      * Verify not empty
-     * @param $name
      * @param $value
      * @return string
      */
-    public function notBlank($name, $value)
+    public function notBlank($value)
     {
         if(empty($value))
         {
@@ -24,12 +23,11 @@ class Constraint
 
     /**
      * Verify minimum length
-     * @param $name
      * @param $value
      * @param $minSize
      * @return string
      */
-    public function minLength($name, $value, $minSize)
+    public function minLength($value, $minSize)
     {
         if(strlen($value) < $minSize)
         {
@@ -39,12 +37,11 @@ class Constraint
 
     /**
      * Verify maximum length
-     * @param $name
      * @param $value
      * @param $maxSize
      * @return string
      */
-    public function maxLength($name, $value, $maxSize)
+    public function maxLength($value, $maxSize)
     {
         if(strlen($value) > $maxSize)
         {
@@ -54,11 +51,10 @@ class Constraint
 
     /**
      * Verify is email
-     * @param $name
      * @param $value
      * @return string
      */
-    public function isEmail($name, $value)
+    public function isEmail($value)
     {
         if (!preg_match( " /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/ " , $value ) )
         {

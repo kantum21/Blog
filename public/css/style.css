@@ -185,6 +185,22 @@
 {
     margin-bottom: 25px;
 }
+#errorPage
+{
+    text-align: center;
+    width: 55%;
+    margin: auto;
+}
+#errorPage h1
+{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+#errorPage img
+{
+    width: 250px;
+    height: 250px;
+}
 footer
 {
     height: 120px;

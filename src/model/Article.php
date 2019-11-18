@@ -29,6 +29,11 @@ class Article
     private $content;
 
     /**
+     * @var int
+     */
+    private $user_id;
+
+    /**
      * @var string
      */
     private $author;
@@ -105,6 +110,22 @@ class Article
     public function setContent($content)
     {
         $this->content = $content;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param int $user_id
+     */
+    public function setUserId($user_id)
+    {
+        $this->user_id = $user_id;
     }
 
     /**

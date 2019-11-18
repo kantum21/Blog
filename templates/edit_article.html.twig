@@ -26,6 +26,17 @@
                 {% if errors.content %}
                     <p class="text-danger">{{ errors.content }}</p>
                 {% endif %}
+                <div class="form-group">
+                    <label for="user_id">Auteur *</label>
+                    <select class="form-control" id="user_id" name="user_id">
+                        {% for user in post.get('users') %}
+                            <option value="{{ user.id }}" {% if post.get('user_id') == user.id %}selected{% endif %}>{{ user.pseudo }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% if errors.user_id %}
+                    <p class="text-danger">{{ errors.user_id }}</p>
+                {% endif %}
                 <p>Les champs marqués d'une * sont obligatoires</p>
                 <input type="submit" value="Modifier" id="submit" name="submit" class="btn btn-success">
             </form>

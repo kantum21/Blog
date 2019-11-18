@@ -22,8 +22,26 @@ class UserDAO extends DAO
         $user->setId($row['id']);
         $user->setPseudo($row['pseudo']);
         $user->setCreatedAt($row['createdAt']);
+        $user->setActive($row['active']);
         $user->setRole($row['name']);
         return $user;
+    }
+
+    /**
+     * Return users id in database
+     * @return array
+     */
+    public function getUsersId()
+    {
+        $sql = 'SELECT id FROM user';
+        $result = $this->createQuery($sql);
+        $usersId = array();
+        foreach ($result as $row)
+        {
+            $usersId[] = $row['id'];
+        }
+        $result->closeCursor();
+        return $usersId;
     }
 
     /**
@@ -32,7 +50,7 @@ class UserDAO extends DAO
      */
     public function getUsers()
     {
-        $sql = 'SELECT user.id, user.pseudo, user.createdAt, role.name FROM user INNER JOIN role ON user.role_id = role.id ORDER BY user.id DESC';
+        $sql = 'SELECT user.id, user.pseudo, user.createdAt, user.active, role.name FROM user INNER JOIN role ON user.role_id = role.id ORDER BY user.id DESC';
         $result = $this->createQuery($sql);
         $users = [];
         foreach ($result as $row)
@@ -51,8 +69,8 @@ class UserDAO extends DAO
     public function register(Parameter $post)
     {
         $this->checkUser($post);
-        $sql = 'INSERT INTO user (pseudo, password, createdAt, role_id) VALUES (?, ?, NOW(), ?)';
-        $this->createQuery($sql, [$post->get('pseudo'), password_hash($post->get('password'), PASSWORD_BCRYPT), 2]);
+        $sql = 'INSERT INTO user (pseudo, password, createdAt, active, role_id) VALUES (?, ?, NOW(), ?, ?)';
+        $this->createQuery($sql, [$post->get('pseudo'), password_hash($post->get('password'), PASSWORD_BCRYPT), 1, 2]);
     }
 
     /**
@@ -73,18 +91,21 @@ class UserDAO extends DAO
 
     /**
      * Verify if user and password are ok for login in database
+     * Verify also if user account is active
      * @param Parameter $post
      * @return array
      */
     public function login(Parameter $post)
     {
-        $sql = 'SELECT user.id, user.role_id, user.password, role.name FROM user INNER JOIN role ON role.id = user.role_id WHERE pseudo = ?';
+        $sql = 'SELECT user.id, user.role_id, user.password, user.active, role.name FROM user INNER JOIN role ON role.id = user.role_id WHERE pseudo = ?';
         $data = $this->createQuery($sql, [$post->get('pseudo')]);
         $result = $data->fetch();
         $isPasswordValid = password_verify($post->get('password'), $result['password']);
+        $isActive = $result['active'];
         return [
             'result' => $result,
-            'isPasswordValid' => $isPasswordValid
+            'isPasswordValid' => $isPasswordValid,
+            'isActive' => $isActive
         ];
     }
 
@@ -116,6 +137,42 @@ class UserDAO extends DAO
     public function deleteUser($userId)
     {
         $sql = 'DELETE FROM user WHERE id = ?';
+        $this->createQuery($sql, [$userId]);
+    }
+
+    /**
+     * Delete articles associated to user
+     * @param $userId
+     */
+    public function deleteAssociatedArticles($userId)
+    {
+        $sql = 'SELECT id FROM article WHERE user_id = ?';
+        $result = $this->createQuery($sql, [$userId]);
+        foreach ($result as $row)
+        {
+            $articleId = $row['id'];
+            $articleDAO = new ArticleDAO();
+            $articleDAO->deleteArticle($articleId);
+        }
+    }
+
+    /**
+     * Active user account
+     * @param $userId
+     */
+    public function activeUser($userId)
+    {
+        $sql = 'UPDATE user SET active = 1 WHERE id = ?';
+        $this->createQuery($sql, [$userId]);
+    }
+
+    /**
+     * Unactive user account
+     * @param $userId
+     */
+    public function unactiveUser($userId)
+    {
+        $sql = 'UPDATE user SET active = 0 WHERE id = ?';
         $this->createQuery($sql, [$userId]);
     }
 }

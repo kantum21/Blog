@@ -2,6 +2,7 @@
 
 namespace App\src\constraint;
 use App\config\Parameter;
+use App\src\DAO\UserDAO;
 
 /**
  * Class ArticleValidation
@@ -61,6 +62,11 @@ class ArticleValidation extends Validation
         elseif ($name === 'content')
         {
             $error = $this->checkContent($value);
+            $this->addError($name, $error);
+        }
+        elseif ($name === 'user_id')
+        {
+            $error = $this->checkUserId($value);
             $this->addError($name, $error);
         }
     }
@@ -132,6 +138,19 @@ class ArticleValidation extends Validation
         if($this->constraint->minLength($value, 2))
         {
             return $this->constraint->minLength($value, 2);
+        }
+    }
+
+    /**
+     * Check Author field
+     * @param $value
+     * @return string
+     */
+    private function checkUserId($value)
+    {
+        if ($this->constraint->isUserId($value))
+        {
+            return $this->constraint->isUserId($value);
         }
     }
 }

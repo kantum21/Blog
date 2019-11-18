@@ -2,6 +2,8 @@
 
 namespace App\src\constraint;
 
+use App\src\DAO\UserDAO;
+
 /**
  * Class Constraint
  * @package App\src\constraint
@@ -59,6 +61,20 @@ class Constraint
         if (!preg_match( " /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/ " , $value ) )
         {
             return 'Cet email n\'est pas valide';
+        }
+    }
+
+    /**
+     * Verify if author exist
+     * @param $value
+     * @return string
+     */
+    public function isUserId($value)
+    {
+        $userDAO = new UserDAO();
+        if (!in_array($value, $userDAO->getUsersId()))
+        {
+            return 'Cet author n\'est pas valide';
         }
     }
 }

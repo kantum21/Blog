@@ -23,6 +23,7 @@ class ArticleDAO extends DAO
         $article->setTitle($row['title']);
         $article->setHead($row['head']);
         $article->setContent($row['content']);
+        $article->setUserId($row['user_id']);
         $article->setAuthor($row['pseudo']);
         $article->setCreatedAt($row['createdAt']);
         $article->setUpdatedAt($row['updatedAt']);
@@ -35,7 +36,7 @@ class ArticleDAO extends DAO
      */
     public function getArticles()
     {
-        $sql = 'SELECT article.id, article.title, article.head, article.content, user.pseudo, article.createdAt, article.updatedAt FROM article INNER JOIN user ON article.user_id = user.id ORDER BY article.id DESC';
+        $sql = 'SELECT article.id, article.title, article.head, article.content, user.id as user_id, user.pseudo, article.createdAt, article.updatedAt FROM article INNER JOIN user ON article.user_id = user.id ORDER BY article.id DESC';
         $result = $this->createQuery($sql);
         $articles = [];
         foreach ($result as $row)
@@ -54,7 +55,7 @@ class ArticleDAO extends DAO
      */
     public function getArticle($articleId)
     {
-        $sql = 'SELECT article.id, article.title, article.head, article.content, user.pseudo, article.createdAt, article.updatedAt FROM article INNER JOIN user ON article.user_id = user.id WHERE article.id = ?';
+        $sql = 'SELECT article.id, article.title, article.head, article.content, user.id as user_id, user.pseudo, article.createdAt, article.updatedAt FROM article INNER JOIN user ON article.user_id = user.id WHERE article.id = ?';
         $result = $this->createQuery($sql, [$articleId]);
         $article = $result->fetch();
         $result->closeCursor();
@@ -62,7 +63,7 @@ class ArticleDAO extends DAO
     }
 
     /**
-     * Add an artcile in database
+     * Add an article in database
      * @param Parameter $post
      * @param $userId
      */
@@ -76,16 +77,15 @@ class ArticleDAO extends DAO
      * Update an article in database
      * @param Parameter $post
      * @param $articleId
-     * @param $userId
      */
-    public function editArticle(Parameter $post, $articleId, $userId)
+    public function editArticle(Parameter $post, $articleId)
     {
         $sql = 'UPDATE article SET title=:title, head=:head, content=:content, updatedAt=NOW(), user_id=:user_id WHERE id=:articleId';
         $this->createQuery($sql, [
             'title' => $post->get('title'),
             'head' => $post->get('head'),
             'content' => $post->get('content'),
-            'user_id' => $userId,
+            'user_id' => $post->get('user_id'),
             'articleId' => $articleId
         ]);
     }

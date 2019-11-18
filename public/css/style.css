@@ -203,13 +203,13 @@
 }
 footer
 {
-    height: 120px;
-    line-height: 120px;
     text-align: center;
     background-color: #2C3E50;
     color: white;
 }
 footer p
 {
-    margin-bottom: 0;
+    height: 60px;
+    line-height: 60px;
+    margin-bottom: 0px;
 }

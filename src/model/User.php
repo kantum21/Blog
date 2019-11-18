@@ -29,6 +29,11 @@ class User
     private $createdAt;
 
     /**
+     * @var bool
+     */
+    private $active;
+
+    /**
      * @var string
      */
     private $role;
@@ -95,6 +100,22 @@ class User
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
     }
 
     /**

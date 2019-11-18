@@ -12,4 +12,4 @@ const DB_PASS = 'root';
 /**
  * Constant for contact section
  */
-const EMAIL = 'quentinsporn@gmail.com';
+const ADMIN_EMAIL = 'quentinsporn@gmail.com';

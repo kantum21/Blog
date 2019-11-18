@@ -19,15 +19,7 @@ class BackController extends Controller
      */
     private function checkLoggedIn()
     {
-        if(!$this->session->get('pseudo'))
-        {
-            $this->session->set('need_login', 'Vous devez vous connecter pour accéder à cette page');
-            header('Location: ../public/index.php?route=login');
-        }
-        else
-        {
-            return true;
-        }
+        return $this->session->get('pseudo') ? 1 : 0;
     }
 
     /**
@@ -36,16 +28,7 @@ class BackController extends Controller
      */
     private function checkAdmin()
     {
-        $this->checkLoggedIn();
-        if(!($this->session->get('role') === 'admin'))
-        {
-            $this->session->set('not_admin', 'Vous n\'avez pas le droit d\'accéder à cette page');
-            header('Location: ../public/index.php?route=profile');
-        }
-        else
-        {
-            return true;
-        }
+        return $this->session->get('role') === 'admin' ? 1 : 0;
     }
 
     /**
@@ -53,17 +36,28 @@ class BackController extends Controller
      */
     public function administration()
     {
-        if($this->checkAdmin())
+        if($this->checkLoggedIn())
         {
             $articles = $this->articleDAO->getArticles();
-            $comments = $this->commentDAO->getFlagComments();
-            $users = $this->userDAO->getUsers();
-
+            $comments = null;
+            $users = null;
+            $is_admin = false;
+            if ($this->checkAdmin())
+            {
+                $comments = $this->commentDAO->getFlagComments();
+                $users = $this->userDAO->getUsers();
+                $is_admin = true;
+            }
             echo $this->twig->render('administration.html.twig', [
                 'articles' => $articles,
                 'comments' => $comments,
-                'users' => $users
+                'users' => $users,
+                'is_admin' => $is_admin
             ]);
+        }
+        else
+        {
+            header('Location: ../public/index.php?route=login');
         }
     }
 
@@ -76,7 +70,7 @@ class BackController extends Controller
      */
     public function addArticle(Parameter $post)
     {
-        if($this->checkAdmin())
+        if($this->checkLoggedIn())
         {
             if ($post->get('submit'))
             {
@@ -102,22 +96,23 @@ class BackController extends Controller
     /**
      * Update an article
      * @param Parameter $post
-     * @param $articleId
+     * @param int $articleId
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
     public function editArticle(Parameter $post, $articleId)
     {
-        if($this->checkAdmin())
+        if($this->checkLoggedIn())
         {
             $article = $this->articleDAO->getArticle($articleId);
+            $users = $this->userDAO->getUsers();
             if ($post->get('submit'))
             {
                 $errors = $this->validation->validate($post, 'Article');
                 if (!$errors)
                 {
-                    $this->articleDAO->editArticle($post, $articleId, $this->session->get('id'));
+                    $this->articleDAO->editArticle($post, $articleId);
                     $this->session->set('edit_article', 'L\' article a bien été modifié');
                     header('Location: ../public/index.php?route=administration');
                 }
@@ -132,11 +127,16 @@ class BackController extends Controller
                 $post->set('title', $article->getTitle());
                 $post->set('head', $article->getHead());
                 $post->set('content', $article->getContent());
-                $post->set('author', $article->getAuthor());
+                $post->set('user_id', $article->getUserId());
+                $post->set('users', $users);
                 echo $this->twig->render('edit_article.html.twig', [
                     'post' => $post
                 ]);
             }
+        }
+        else
+        {
+            header('Location: ../public/index.php?route=login');
         }
     }
 
@@ -146,7 +146,8 @@ class BackController extends Controller
      */
     public function deleteArticle($articleId)
     {
-        if($this->checkAdmin()) {
+        if($this->checkAdmin())
+        {
             $this->articleDAO->deleteArticle($articleId);
             $this->session->set('delete_article', 'L\' article a bien été supprimé');
             header('Location: ../public/index.php?route=administration');
@@ -159,9 +160,38 @@ class BackController extends Controller
      */
     public function unflagComment($commentId)
     {
-        if($this->checkAdmin()) {
+        if($this->checkAdmin())
+        {
             $this->commentDAO->unflagComment($commentId);
             $this->session->set('unflag_comment', 'Le commentaire a bien été désignalé');
+            header('Location: ../public/index.php?route=administration');
+        }
+    }
+
+    /**
+     * Active a user account
+     * @param $userId
+     */
+    public function activeUser($userId)
+    {
+        if($this->checkAdmin())
+        {
+            $this->userDAO->activeUser($userId);
+            $this->session->set('active_user', 'L\'utilisateur a bien été activé');
+            header('Location: ../public/index.php?route=administration');
+        }
+    }
+
+    /**
+     * Unactive a user account
+     * @param $userId
+     */
+    public function unactiveUser($userId)
+    {
+        if($this->checkAdmin())
+        {
+            $this->userDAO->unactiveUser($userId);
+            $this->session->set('unactive_user', 'L\'utilisateur a bien été désactivé');
             header('Location: ../public/index.php?route=administration');
         }
     }
@@ -172,7 +202,8 @@ class BackController extends Controller
      */
     public function deleteComment($commentId)
     {
-        if($this->checkAdmin()) {
+        if($this->checkAdmin())
+        {
             $this->commentDAO->deleteComment($commentId);
             $this->session->set('delete_comment', 'Le commentaire a bien été supprimé');
             header('Location: ../public/index.php?route=administration');
@@ -242,6 +273,7 @@ class BackController extends Controller
     {
         if($this->checkAdmin())
         {
+            $this->userDAO->deleteAssociatedArticles($userId);
             $this->userDAO->deleteUser($userId);
             $this->session->set('delete_user', 'L\'utilisateur a bien été supprimé');
             header('Location: ../public/index.php?route=administration');

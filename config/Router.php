@@ -77,6 +77,14 @@ class Router
                 {
                     $this->backController->unflagComment($this->request->getGet()->get('commentId'));
                 }
+                elseif ($route === 'activeUser')
+                {
+                    $this->backController->activeUser($this->request->getGet()->get('userId'));
+                }
+                elseif ($route === 'unactiveUser')
+                {
+                    $this->backController->unactiveUser($this->request->getGet()->get('userId'));
+                }
                 elseif($route === 'deleteComment')
                 {
                     $this->backController->deleteComment($this->request->getGet()->get('commentId'));

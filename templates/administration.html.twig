@@ -23,61 +23,70 @@
                     <td>{{ article.getHead|slice(0, 150) }}</td>
                     <td>{{ article.getContent|slice(0, 150) }}</td>
                     <td>{{ article.getAuthor }}</td>
-                    <td>Créé le : {{ article.getCreatedAt|date("d/m/Y H:i:s") }}</td>
+                    <td>{{ article.getUpdatedAt|date("d/m/Y H:i:s") }}</td>
                     <td>
                         <a href="../public/index.php?route=editArticle&articleId={{ article.getId }}">Modifier</a>
-                        <a href="../public/index.php?route=deleteArticle&articleId={{ article.getId }}">Supprimer</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
-        <h2>Commentaires signalés</h2>
-        <table class="table table-hover">
-            <tr>
-                <td>Id</td>
-                <td>Pseudo</td>
-                <td>Message</td>
-                <td>Date</td>
-                <td>Actions</td>
-            </tr>
-            {% for comment in comments %}
-                <tr>
-                    <td>{{ comment.getId }}</td>
-                    <td>{{ comment.getPseudo }}</td>
-                    <td>{{ comment.getContent|slice(0, 150) }}</td>
-                    <td>Créé le : {{ comment.getCreatedAt|date("d/m/Y H:i:s") }}</td>
-                    <td>
-                        <a href="../public/index.php?route=unflagComment&commentId={{ comment.getId }}">Désignaler le commentaire</a>
-                        <a href="../public/index.php?route=deleteComment&commentId={{ comment.getId }}">Supprimer le commentaire</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
-        <h2>Utilisateurs</h2>
-        <table class="table table-hover">
-            <tr>
-                <td>Id</td>
-                <td>Pseudo</td>
-                <td>Date</td>
-                <td>Rôle</td>
-                <td>Actions</td>
-            </tr>
-            {% for user in users %}
-                <tr>
-                    <td>{{ user.getId }}</td>
-                    <td>{{ user.getPseudo }}</td>
-                    <td>Créé le : {{ user.getCreatedAt }}</td>
-                    <td>{{ user.getRole }}</td>
-                    <td>
-                        {% if user.getRole != 'admin' %}
-                            <a href="../public/index.php?route=deleteUser&userId={{ user.getId }}">Supprimer</a>
-                        {% else %}
-                            Suppression impossible
+                        {% if is_admin %}
+                            <a href="../public/index.php?route=deleteArticle&articleId={{ article.getId }}">Supprimer</a>
                         {% endif %}
                     </td>
                 </tr>
             {% endfor %}
         </table>
+        {% if is_admin %}
+            <h2>Commentaires signalés</h2>
+            <table class="table table-hover">
+                <tr>
+                    <td>Id</td>
+                    <td>Pseudo</td>
+                    <td>Message</td>
+                    <td>Date</td>
+                    <td>Actions</td>
+                </tr>
+                {% for comment in comments %}
+                    <tr>
+                        <td>{{ comment.getId }}</td>
+                        <td>{{ comment.getPseudo }}</td>
+                        <td>{{ comment.getContent|slice(0, 150) }}</td>
+                        <td>Créé le : {{ comment.getCreatedAt|date("d/m/Y H:i:s") }}</td>
+                        <td>
+                            <a href="../public/index.php?route=unflagComment&commentId={{ comment.getId }}">Désignaler le commentaire</a>
+                            <a href="../public/index.php?route=deleteComment&commentId={{ comment.getId }}">Supprimer le commentaire</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <h2>Utilisateurs</h2>
+            <table class="table table-hover">
+                <tr>
+                    <td>Id</td>
+                    <td>Pseudo</td>
+                    <td>Date</td>
+                    <td>Rôle</td>
+                    <td>Actions</td>
+                </tr>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.getId }}</td>
+                        <td>{{ user.getPseudo }}</td>
+                        <td>{{ user.getCreatedAt }}</td>
+                        <td>{{ user.getRole }}</td>
+                        <td>
+                            {% if user.getRole != 'admin' %}
+                                {% if user.getActive %}
+                                    <a href="../public/index.php?route=unactiveUser&userId={{ user.getId }}">Désactiver</a>
+                                {% else %}
+                                    <a href="../public/index.php?route=activeUser&userId={{ user.getId }}">Activer</a>
+                                {% endif %}
+                                <a href="../public/index.php?route=deleteUser&userId={{ user.getId }}">Supprimer</a>
+                            {% else %}
+                                Suppression impossible
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
         <p>
             <a href="../public/index.php?route=homeBlog"><button class="btn btn-secondary">Retour à l'accueil</button></a>
         </p>

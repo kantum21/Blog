@@ -34,6 +34,18 @@
         {{ app.session.show('unflag_comment') }}
     </div>
 {% endif %}
+{% if app.session.get('active_user') %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ app.session.show('active_user') }}
+    </div>
+{% endif %}
+{% if app.session.get('unactive_user') %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ app.session.show('unactive_user') }}
+    </div>
+{% endif %}
 {% if app.session.get('delete_comment') %}
     <div class="alert alert-dismissible alert-success">
         <button type="button" class="close" data-dismiss="alert">&times;</button>

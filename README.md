@@ -1,6 +1,8 @@
 # Blog
 Projet 5 - Formation développeur d'applications PHP/Symfony
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/1de59a80696b55e07d23/maintainability)](https://codeclimate.com/github/kantum21/Blog/maintainability)
+
 SetUp Instructions
 
 1. Get Project : git clone https://github.com/kantum21/Blog.git

@@ -8,7 +8,7 @@
             <p><strong>{{ article.getHead }}</strong></p>
             <p>{{ article.getContent }}</p>
             <p><em>Auteur : {{ article.getAuthor }}</em></p>
-            <p>Mis à jours le : {{ article.getUpdatedAt }}</p>
+            <p>Mis à jours le : {{ article.getUpdatedAt|date('d/m/Y à H:i:s') }}</p>
         </div>
         <div id="comments">
             <h2>Ajouter un commentaire</h2>

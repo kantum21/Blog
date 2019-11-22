@@ -1,6 +1,6 @@
 <?php
 /**
- * Constants for database connection in dev environment
+ * Constants for database connection in prod environment
  */
 const HOST = 'localhost';
 const DB_NAME = 'blog';

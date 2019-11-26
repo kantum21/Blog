@@ -110,13 +110,7 @@ class BackController extends Controller
             $users = $this->userDAO->getUsers();
             if ($post->get('submit'))
             {
-                $errors = $this->validation->validate($post, 'Article');
-                if (!$errors)
-                {
-                    $this->articleDAO->editArticle($post, $articleId);
-                    $this->session->set('edit_article', 'L\' article a bien été modifié');
-                    header('Location: ../public/index.php?route=administration');
-                }
+                $errors = $this->handleEditArticleSubmission($post, $articleId);
                 echo $this->twig->render('edit_article.html.twig', [
                     'post' => $post,
                     'errors' => $errors
@@ -143,7 +137,7 @@ class BackController extends Controller
      * @param $users
      * @return Parameter
      */
-    public function hydrateArticleForm(Parameter $post,Article $article, $users)
+    private function hydrateArticleForm(Parameter $post,Article $article, $users)
     {
         $post->set('id', $article->getId());
         $post->set('title', $article->getTitle());
@@ -152,6 +146,24 @@ class BackController extends Controller
         $post->set('user_id', $article->getUserId());
         $post->set('users', $users);
         return $post;
+    }
+
+    /**
+     * Handle article edit submission
+     * @param Parameter $post
+     * @param $articleId
+     * @return array
+     */
+    private function handleEditArticleSubmission(Parameter $post, $articleId)
+    {
+        $errors = $this->validation->validate($post, 'Article');
+        if (!$errors)
+        {
+            $this->articleDAO->editArticle($post, $articleId);
+            $this->session->set('edit_article', 'L\' article a bien été modifié');
+            header('Location: ../public/index.php?route=administration');
+        }
+        return $errors;
     }
 
     /**

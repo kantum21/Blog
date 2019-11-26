@@ -3,6 +3,7 @@
 namespace App\src\controller;
 
 use App\config\Parameter;
+use App\src\model\Article;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -123,12 +124,7 @@ class BackController extends Controller
             }
             else
             {
-                $post->set('id', $article->getId());
-                $post->set('title', $article->getTitle());
-                $post->set('head', $article->getHead());
-                $post->set('content', $article->getContent());
-                $post->set('user_id', $article->getUserId());
-                $post->set('users', $users);
+                $post = $this->hydrateArticleForm($post, $article, $users);
                 echo $this->twig->render('edit_article.html.twig', [
                     'post' => $post
                 ]);
@@ -138,6 +134,24 @@ class BackController extends Controller
         {
             header('Location: ../public/index.php?route=login');
         }
+    }
+
+    /**
+     * Hydrate article form
+     * @param Parameter $post
+     * @param Article $article
+     * @param $users
+     * @return Parameter
+     */
+    public function hydrateArticleForm(Parameter $post,Article $article, $users)
+    {
+        $post->set('id', $article->getId());
+        $post->set('title', $article->getTitle());
+        $post->set('head', $article->getHead());
+        $post->set('content', $article->getContent());
+        $post->set('user_id', $article->getUserId());
+        $post->set('users', $users);
+        return $post;
     }
 
     /**
